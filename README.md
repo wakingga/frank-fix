@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Frank's Friendly Fixing
 
-## Getting Started
+Frank is a P2P currency exchange facilitator targeting the France-Switzerland cross-border community (EUR/CHF). This Minimum Viable Product (MVP) provides a fair, mid-market rate calculator to remove friction from direct currency swaps between peers and allows users to sign up for a waitlist for future features.
 
-First, run the development server:
+**Note**: Frank is a tool for finding fair exchange rates. It is not a bank, broker, or financial institution, and it does not hold or move funds.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🛠 Tech Stack
+
+*   **Frontend & API**: [Next.js](https://nextjs.org/) (App Router)
+*   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+*   **Exchange Rates**: [Frankfurter API](https://www.frankfurter.app/) (Free open-source API for European Central Bank rates)
+*   **Database**: [Supabase](https://supabase.com/) (PostgreSQL for the waitlist)
+
+---
+
+## 🚀 Getting Started Locally
+
+### 1. Requirements
+*   [Node.js](https://nodejs.org/) (v18 or newer recommended)
+*   A [Supabase](https://supabase.com/) account and project.
+
+### 2. Database Setup
+Execute the following SQL commands in your Supabase project's SQL Editor to set up the waitlist table:
+
+```sql
+-- Create the waitlist table
+create table public.waitlist (
+  id uuid default gen_random_uuid() primary key,
+  email text unique not null,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- Enable Row Level Security (RLS)
+alter table public.waitlist enable row level security;
+
+-- Create policy to allow anyone to insert emails (for the form)
+create policy "Allow anonymous inserts"
+  on public.waitlist
+  for insert
+  to anon
+  with check (true);
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Environment Variables
+Create a file named `.env.local` in the root of the directory and add your Supabase credentials:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Run the Development Server
+Install the dependencies and start Next.js:
 
-## Learn More
+```bash
+npm install
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:3000](http://localhost:3000) (or the port specified in your terminal, e.g., 3002) in your browser to view the application.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🌍 Deployment
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+You can deploy this project easily via [Vercel](https://vercel.com).
+When deploying, make sure to add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` to your Vercel project's Environment Variables.
