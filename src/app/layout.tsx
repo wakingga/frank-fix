@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Frank's Friendly Fixing",
-  description: "A fair, indisputable exchange rate for EUR/CHF peer-to-peer swaps.",
+  description: "Fair exchange rate for EUR/CHF peer-to-peer swaps.",
 };
 
 export default function RootLayout({
