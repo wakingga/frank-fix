@@ -1,3 +1,8 @@
+# ⚠️ PROJECT ARCHIVED / DECOMMISSIONED
+**Frank is no longer maintained.** 
+I've decided to stop the project to focus on other ventures. 
+You can read the full post-mortem and lessons learned on [my Substack](https://thegrindlevel1.substack.com/).
+
 # Frank's Friendly Fixing
 
 Frank is a P2P currency exchange facilitator targeting the France-Switzerland cross-border community (EUR/CHF). This Minimum Viable Product (MVP) provides a fair, mid-market rate calculator to remove friction from direct currency swaps between peers and allows users to sign up for a waitlist for future features.
